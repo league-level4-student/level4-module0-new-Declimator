@@ -8,7 +8,17 @@ public class EncapsulateTheData {
      */
 
     int itemsReceived;
-
+    
+    public int getItemsReceived() {
+    	return itemsReceived; 
+    }
+    
+    public void setItemsReceived(int item) {
+    	if(item >= 0)
+    		itemsReceived = item;
+    	else
+    		itemsReceived = 0;
+    }
     /*
      * degreesTurned must be locked between 0.0 and 360.0 inclusive. All
      * parameters outside this range should set degreesTurned to the nearest

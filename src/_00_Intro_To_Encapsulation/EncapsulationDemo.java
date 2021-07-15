@@ -15,7 +15,11 @@ public class EncapsulationDemo {
      */
 
     public static void main(String[] args) {
-
+    	Car c = new Car(100, 50, "red", 15);
+    	for(int i = 0; i < 51; i++) {
+    	c.drive();
+    	System.out.println(c.getFuelInTank());
+    	}
     }
 
 }
@@ -127,7 +131,7 @@ class Car {
     protected void drive() {
 
         if (fuelInTank()) {
-            System.out.println("I'm driving my " + color + "car...");
+            System.out.println("I'm driving my " + color + " car...");
             setFuelInTank(fuelInTank - 1);
         } else {
             System.out.println("I'm out of gas.");
