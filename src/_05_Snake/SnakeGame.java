@@ -16,168 +16,178 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class SnakeGame implements ActionListener, KeyListener {
-    public static final Color BORDER_COLOR = Color.WHITE;
-    public static final Color BACKGROUND_COLOR = Color.BLACK;
-    public static final Color FOOD_COLOR = Color.RED;
-    public static final int WIDTH = 15;
-    public static final int HEIGHT = 12;
-    public static final int WINDOW_SCALE = 50;
-    public static final int WINDOW_WIDTH = WINDOW_SCALE * WIDTH;
-    public static final int WINDOW_HEIGHT = WINDOW_SCALE * HEIGHT;
+	public static final Color BORDER_COLOR = Color.WHITE;
+	public static final Color BACKGROUND_COLOR = Color.BLACK;
+	public static final Color FOOD_COLOR = Color.RED;
+	public static final int WIDTH = 15;
+	public static final int HEIGHT = 12;
+	public static final int WINDOW_SCALE = 50;
+	public static final int WINDOW_WIDTH = WINDOW_SCALE * WIDTH;
+	public static final int WINDOW_HEIGHT = WINDOW_SCALE * HEIGHT;
 
-    private JFrame window;
-    private JPanel panel;
+	private JFrame window;
+	private JPanel panel;
 
-    private Snake snake;
+	private Snake snake;
 
-    private Timer timer;
+	private Timer timer;
 
-    private Location foodLocation;
+	private Location foodLocation;
 
-    public SnakeGame() {
-        snake = new Snake(new Location(WIDTH / 2, HEIGHT / 2));
+	public SnakeGame() {
+		snake = new Snake(new Location(WIDTH / 2, HEIGHT / 2));
 
-        window = new JFrame("Snake");
-        panel = new JPanel() {
-            private static final long serialVersionUID = 1L;
+		window = new JFrame("Snake");
+		panel = new JPanel() {
+			private static final long serialVersionUID = 1L;
 
-            @Override
-            public void paintComponent(Graphics g) {
-                Graphics2D g2 = (Graphics2D) g;
+			@Override
+			public void paintComponent(Graphics g) {
+				Graphics2D g2 = (Graphics2D) g;
 
-                g2.setColor(BACKGROUND_COLOR);
-                g2.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+				g2.setColor(BACKGROUND_COLOR);
+				g2.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-                g2.setColor(FOOD_COLOR);
-                g2.drawOval(foodLocation.getX() * WINDOW_SCALE,
-                        foodLocation.getY() * WINDOW_SCALE, Snake.BODY_SIZE,
-                        Snake.BODY_SIZE);
-                snake.draw(g);
-            }
-        };
+				g2.setColor(FOOD_COLOR);
+				g2.drawOval(foodLocation.getX() * WINDOW_SCALE, foodLocation.getY() * WINDOW_SCALE, Snake.BODY_SIZE,
+						Snake.BODY_SIZE);
+				snake.draw(g);
+			}
+		};
 
-        panel.setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
-        window.add(panel);
+		panel.setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
+		window.add(panel);
 
-        timer = new Timer(0, this);
+		timer = new Timer(0, this);
 
-        window.pack();
-        window.addKeyListener(this);
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setVisible(true);
+		window.pack();
+		window.addKeyListener(this);
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		window.setVisible(true);
 
-        setFoodLocation();
+		setFoodLocation();
 
-        startGame();
-    }
+		startGame();
+	}
 
-    public void startGame() {
-        String instructions = "Collect food to grow your snake.\nThe game is "
-                + "over if you run into your tail or the edge of the window."
-                + "\nClick OK to begin!";
+	public void startGame() {
+		String instructions = "Collect food to grow your snake.\nThe game is "
+				+ "over if you run into your tail or the edge of the window." + "\nClick OK to begin!";
 
-        JOptionPane.showMessageDialog(null, instructions);
+		JOptionPane.showMessageDialog(null, instructions);
 
-        // Adjust delay here if you want snake to go slower or faster.
+		// Adjust delay here if you want snake to go slower or faster.
 
-        timer.setDelay(250);
+		timer.setDelay(250);
 
-        timer.start();
-    }
+		timer.start();
+	}
 
-    public static void main(String[] args) {
-        new SnakeGame();
-    }
+	public static void main(String[] args) {
+		new SnakeGame();
+	}
 
-    @Override
-    public void keyTyped(KeyEvent e) {
-    }
+	@Override
+	public void keyTyped(KeyEvent e) {
+	}
 
-    @Override
-    public void keyPressed(KeyEvent e) {
+	@Override
+	public void keyPressed(KeyEvent e) {
 
-        /*
-         * Use a switch statement on e.getKeyCode() to determine which key was
-         * pressed. Hint: Remember int KeyCode constants take a form matching
-         * KeyEvent.VK_UP.
-         * 
-         * If an arrow key is pressed, set the snake's direction accordingly.
-         * 
-         * If the space key is pressed, call the snake's feed method.
-         */
-        
-        
+		/*
+		 * Use a switch statement on e.getKeyCode() to determine which key was pressed.
+		 * Hint: Remember int KeyCode constants take a form matching KeyEvent.VK_UP.
+		 * 
+		 * If an arrow key is pressed, set the snake's direction accordingly.
+		 * 
+		 * If the space key is pressed, call the snake's feed method.
+		 */
+		switch (e.getKeyCode()) {
+		case KeyEvent.VK_SPACE:
+			snake.feed();
+			break;
+		case KeyEvent.VK_UP:
+			snake.setDirection(Direction.UP);
+			break;
+		case KeyEvent.VK_LEFT:
+			snake.setDirection(Direction.LEFT);
+			break;
+		case KeyEvent.VK_RIGHT:
+			snake.setDirection(Direction.RIGHT);
+			break;
+		case KeyEvent.VK_DOWN:
+			snake.setDirection(Direction.DOWN);
+		}
 
-    }
+	}
 
-    private void setFoodLocation() {
+	private void setFoodLocation() {
 
-        /*
-         * Create a new Location object that is set to a random location between
-         * 0 and the WIDTH and HEIGHT variables.
-         */
+		/*
+		 * Create a new Location object that is set to a random location between 0 and
+		 * the WIDTH and HEIGHT variables.
+		 */
 
-        
+		/*
+		 * Set the foodLocation member variable equal to the Location object you just
+		 * created.
+		 * 
+		 * Use the Snake class's isLocationOnSnake method to make sure you don't put the
+		 * food on top of the snake.
+		 */
+		Location foodLoc = new Location(new Random().nextInt(WIDTH), new Random().nextInt(HEIGHT));
+		while(snake.isLocationOnSnake(foodLoc)) {
+			foodLoc = new Location(new Random().nextInt(WIDTH), new Random().nextInt(HEIGHT));
+		}
+		foodLocation = foodLoc;
+	}
 
-        /*
-         * Set the foodLocation member variable equal to the Location object you
-         * just created.
-         * 
-         * Use the Snake class's isLocationOnSnake method to make sure you don't
-         * put the food on top of the snake.
-         */
+	private void gameOver() {
+		System.out.println("test");
+		// Stop the timer member variable.
+		timer.stop();
+		// Tell the user their snake is dead.
 
+		// Ask the user if they want to play again.
 
-    }
+		/*
+		 * If the user wants to play again, call the Snake class's resetLocation method
+		 * and this class's setFoodLocation method then restart the timer. Otherwise,
+		 * exit the game.
+		 */
+		if(JOptionPane.showConfirmDialog(null, "Game Over. Play again?") == 1) {
+			snake.resetLocation();
+			setFoodLocation();
+			timer.start();
+		} else {
+			System.exit(0);
+		}
+	}
 
-    private void gameOver() {
+	@Override
+	public void keyReleased(KeyEvent e) {
+	}
 
-        // Stop the timer member variable.
+	@Override
+	public void actionPerformed(ActionEvent e) {
 
-
-        
-        // Tell the user their snake is dead.
-
-
-
-        // Ask the user if they want to play again.
-
-        
-
-        /*
-         * If the user wants to play again, call the Snake class's resetLocation
-         * method and this class's setFoodLocation method then restart the
-         * timer. Otherwise, exit the game.
-         */
-
-        
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-        // Call the Snake class's update method.
-
-
-
-        /*
-         * If the snake is colliding with its own body or if the snake moves
-         * outside the bounds of the frame call the gameOver method.
-         */
-
-
-
-        /*
-         * If the location of the snake's head is equal to the location of the
-         * food, feed the snake and set the food location.
-         */
-
-        
-        panel.repaint();
-    }
+		// Call the Snake class's update method.
+		snake.update();
+		/*
+		 * If the snake is colliding with its own body or if the snake moves outside the
+		 * bounds of the frame call the gameOver method.
+		 */
+		if(snake.isHeadCollidingWithBody() || snake.isOutOfBounds()) {
+			gameOver();
+		}
+		/*
+		 * If the location of the snake's head is equal to the location of the food,
+		 * feed the snake and set the food location.
+		 */
+		if(snake.getHeadLocation() == foodLocation) {
+			snake.feed();
+			setFoodLocation();
+		}
+		panel.repaint();
+	}
 }
