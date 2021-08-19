@@ -78,7 +78,7 @@ public class SnakeGame implements ActionListener, KeyListener {
 
 		// Adjust delay here if you want snake to go slower or faster.
 
-		timer.setDelay(250);
+		timer.setDelay(1000/5);
 
 		timer.start();
 	}
@@ -136,7 +136,7 @@ public class SnakeGame implements ActionListener, KeyListener {
 		 * food on top of the snake.
 		 */
 		Location foodLoc = new Location(new Random().nextInt(WIDTH), new Random().nextInt(HEIGHT));
-		while(snake.isLocationOnSnake(foodLoc)) {
+		if(snake.isLocationOnSnake(foodLoc)) {
 			foodLoc = new Location(new Random().nextInt(WIDTH), new Random().nextInt(HEIGHT));
 		}
 		foodLocation = foodLoc;
@@ -155,7 +155,7 @@ public class SnakeGame implements ActionListener, KeyListener {
 		 * and this class's setFoodLocation method then restart the timer. Otherwise,
 		 * exit the game.
 		 */
-		if(JOptionPane.showConfirmDialog(null, "Game Over. Play again?") == 1) {
+		if(JOptionPane.showConfirmDialog(null, "Game Over. Play again?") == 0) {
 			snake.resetLocation();
 			setFoodLocation();
 			timer.start();
@@ -185,6 +185,7 @@ public class SnakeGame implements ActionListener, KeyListener {
 		 * feed the snake and set the food location.
 		 */
 		if(snake.getHeadLocation() == foodLocation) {
+			System.out.println("eat");
 			snake.feed();
 			setFoodLocation();
 		}
