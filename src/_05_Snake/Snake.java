@@ -24,7 +24,6 @@ public class Snake {
 
 	public void feed() {
 		snake.add(new SnakeSegment(snake.get(0).getLocation(), BODY_SIZE));
-		System.out.println("test");
 	}
 
 	public Location getHeadLocation() {
@@ -67,8 +66,7 @@ public class Snake {
 		 * Create a new Location object and initialize it with the values calculated in
 		 * step 1. Then set the head's location equal to the new location.
 		 */
-		for(int i = 1; i < snake.size(); i++) {
-			System.out.println(snake.size());
+		for(int i = snake.size()-1; i > 0; i--) {
 			snake.get(i).setLocation(snake.get(i-1).getLocation());
 		}
 		Location nextLoc = new Location(nextX, nextY);
@@ -169,13 +167,13 @@ public class Snake {
 		 * Complete the method so it returns true if the passed in location is located
 		 * on the snake.
 		 */
-		System.out.println("onfood");
+		
 		for(int i = 0; i < snake.size(); i++) {
-			System.out.println("food");
-			if(loc == snake.get(i).getLocation()) {
+			if(loc.equals(snake.get(i).getLocation())) {
 				return true;
 			}
 		}
+		
 		return false;
 	}
 

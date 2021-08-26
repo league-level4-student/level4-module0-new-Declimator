@@ -78,7 +78,7 @@ public class SnakeGame implements ActionListener, KeyListener {
 
 		// Adjust delay here if you want snake to go slower or faster.
 
-		timer.setDelay(1000/5);
+		timer.setDelay(1000 / 5);
 
 		timer.start();
 	}
@@ -136,14 +136,13 @@ public class SnakeGame implements ActionListener, KeyListener {
 		 * food on top of the snake.
 		 */
 		Location foodLoc = new Location(new Random().nextInt(WIDTH), new Random().nextInt(HEIGHT));
-		if(snake.isLocationOnSnake(foodLoc)) {
+		while (snake.isLocationOnSnake(foodLoc)) {
 			foodLoc = new Location(new Random().nextInt(WIDTH), new Random().nextInt(HEIGHT));
 		}
 		foodLocation = foodLoc;
 	}
 
 	private void gameOver() {
-		System.out.println("test");
 		// Stop the timer member variable.
 		timer.stop();
 		// Tell the user their snake is dead.
@@ -155,7 +154,7 @@ public class SnakeGame implements ActionListener, KeyListener {
 		 * and this class's setFoodLocation method then restart the timer. Otherwise,
 		 * exit the game.
 		 */
-		if(JOptionPane.showConfirmDialog(null, "Game Over. Play again?") == 0) {
+		if (JOptionPane.showConfirmDialog(null, "Game Over. Play again?") == 0) {
 			snake.resetLocation();
 			setFoodLocation();
 			timer.start();
@@ -177,15 +176,14 @@ public class SnakeGame implements ActionListener, KeyListener {
 		 * If the snake is colliding with its own body or if the snake moves outside the
 		 * bounds of the frame call the gameOver method.
 		 */
-		if(snake.isHeadCollidingWithBody() || snake.isOutOfBounds()) {
+		if (snake.isHeadCollidingWithBody() || snake.isOutOfBounds()) {
 			gameOver();
 		}
 		/*
 		 * If the location of the snake's head is equal to the location of the food,
 		 * feed the snake and set the food location.
 		 */
-		if(snake.getHeadLocation() == foodLocation) {
-			System.out.println("eat");
+		if (snake.getHeadLocation().equals(foodLocation)) {
 			snake.feed();
 			setFoodLocation();
 		}
