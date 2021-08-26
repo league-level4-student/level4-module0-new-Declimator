@@ -1,5 +1,5 @@
 package _06_Card_Game;
 
-public class Suit {
-
+public enum Suit {
+	HEARTS, DIAMONDS, CLUBS, SPADES;
 }
